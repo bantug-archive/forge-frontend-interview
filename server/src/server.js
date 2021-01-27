@@ -8,13 +8,19 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
- 
 app.get('/', function (req, res) {
-    res.send('Welcome to Forge Platform Interview');
+    res.send(notifications);
 });
 
-app.get('/notifications', function (req, res) {
-    res.send(notifications);
+app.get('/:id', function (req, res) {
+    const id = req.params.id;
+    const notification = notifications.find(notification => notification.id === parseInt(id));
+    if (notification) {
+        res.send(notification)
+    } else {
+        res.status(404).send()
+    }
+
 });
 
 app.post('/notifications', function (req, res) {
